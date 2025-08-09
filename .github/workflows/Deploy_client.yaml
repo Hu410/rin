@@ -1,8 +1,6 @@
-name: Deploy Client to Cloudflare Workers
+name: Deploy Client
 
 on:
-  push:
-    branches: [ master ] # 根据你的需求调整触发分支
   workflow_dispatch: # 允许手动触发
 
 jobs:
@@ -48,9 +46,7 @@ jobs:
       - name: Configure Wrangler
         run: |
           cd rin/client
-          echo "${{ secrets.CLOUDFLARE_API_TOKEN }}" | wrangler login --non-interactive
-          # 或者使用 token 直接配置（推荐）
-          # wrangler config --token ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          wrangler config --token ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
       # 8. 发布到 Cloudflare Workers
       - name: Deploy to Cloudflare Workers
