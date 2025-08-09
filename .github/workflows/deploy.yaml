@@ -6,15 +6,6 @@ on:
   #    - master
   #    - fix/*
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Deployment Environment (e.g., production, staging)'
-        required: true
-        default: 'production'
-        type: choice
-        options:
-          - production
-          - staging
 jobs:
   deploy:
     runs-on: ubuntu-latest
