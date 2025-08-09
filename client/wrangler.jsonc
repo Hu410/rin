@@ -3,11 +3,5 @@
   "compatibility_date": "2025-08-09",
   "assets": {
     "directory": "./dist"
-  },
-  "routes": [
-    {
-      "pattern": "www.relc.eu.org",
-      "custom_domain": true
-    }
-  ]
+  }
 }
