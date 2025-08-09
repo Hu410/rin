@@ -40,13 +40,15 @@ jobs:
 
       # 6. 设置 wrangler (Cloudflare Workers CLI)
       - name: Set up Wrangler
-        run: npm install -g wrangler
+        run: |
+          npm install -g wrangler
+          wrangler config --token ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
       # 7. 发布到 Cloudflare Workers
       - name: Deploy to Cloudflare Workers
-        uses: demosjarco/wrangler-action-node@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          command: cd rin/client && wrangler publish ./dist --name rin-client
+        run: |
+          cd rin/client
+          wrangler publish
+
 
 
