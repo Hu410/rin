@@ -48,9 +48,9 @@ jobs:
       - name: Configure Wrangler
         run: |
           cd rin/client
-          #echo "${{ secrets.CLOUDFLARE_API_TOKEN }}" | wrangler login --non-interactive
+          echo "${{ secrets.CLOUDFLARE_API_TOKEN }}" | wrangler login --non-interactive
           # 或者使用 token 直接配置（推荐）
-          wrangler config --token ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          # wrangler config --token ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
       # 8. 发布到 Cloudflare Workers
       - name: Deploy to Cloudflare Workers
