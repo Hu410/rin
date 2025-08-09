@@ -42,13 +42,7 @@ jobs:
       - name: Set up Wrangler
         run: npm install -g wrangler
 
-      # 7. 配置 wrangler (假设你已将 CF_API_TOKEN 存储在 secrets 中)
-      - name: Configure Wrangler
-        run: |
-          cd rin/client
-          wrangler config --token ${{ secrets.CLOUDFLARE_API_TOKEN }}
-
-      # 8. 发布到 Cloudflare Workers
+      # 7. 发布到 Cloudflare Workers
       - name: Deploy to Cloudflare Workers
         uses: demosjarco/wrangler-action-node@v1
         with:
