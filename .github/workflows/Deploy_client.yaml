@@ -1,0 +1,64 @@
+name: Deploy Client to Cloudflare Workers
+
+on:
+  push:
+    branches: [ master ] # 根据你的需求调整触发分支
+  workflow_dispatch: # 允许手动触发
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. 检查出代码
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          repository: Hu410/Rin
+          path: rin
+
+      # 2. 设置 Node.js 环境
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20 # 根据你的项目需求调整版本
+
+      # 3. 设置 Bun
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      # 4. 安装 client 目录下的依赖
+      - name: Install dependencies
+        run: |
+          cd rin/client
+          bun install
+
+      # 5. 构建项目
+      - name: Build project
+        run: |
+          cd rin/client
+          npm run build
+
+      # 6. 设置 wrangler (Cloudflare Workers CLI)
+      - name: Set up Wrangler
+        run: npm install -g wrangler
+
+      # 7. 配置 wrangler (假设你已将 CF_API_TOKEN 存储在 secrets 中)
+      - name: Configure Wrangler
+        run: |
+          cd rin/client
+          #echo "${{ secrets.CLOUDFLARE_API_TOKEN }}" | wrangler login --non-interactive
+          # 或者使用 token 直接配置（推荐）
+          wrangler config --token ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+      # 8. 发布到 Cloudflare Workers
+      - name: Deploy to Cloudflare Workers
+        run: |
+          cd rin/client
+          # 假设你的 wrangler.toml 已经在 client 目录中
+          # 并且配置了正确的 workers_dev 设置或路由
+          wrangler publish ./dist --name rin-client
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
