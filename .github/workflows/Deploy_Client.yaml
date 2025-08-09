@@ -37,6 +37,12 @@ jobs:
         run: |
           cd rin/client
           npm run build
+        env: # Or as an environment variable
+          NAME: ${{ vars.NAME }}
+          DESCRIPTION: ${{ vars.DESCRIPTION }}
+          AVATAR: ${{ vars.AVATAR }}
+          API_URL: ${{ vars.API_URL }}
+          PAGE_SIZE: ${{ vars.PAGE_SIZE }}
 
       # 6. 设置 wrangler (Cloudflare Workers CLI)
       - name: Set up Wrangler
