@@ -1,7 +1,7 @@
 {
   "name": "rin-client",
   "compatibility_date": "2025-08-09",
-  "route": "*",
+  "routes": "*",
   "assets": {
     "directory": "./dist"
   }
