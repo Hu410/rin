@@ -42,13 +42,15 @@ jobs:
       - name: Set up Wrangler
         run: |
           npm install -g wrangler
-          wrangler config --token ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          # wrangler config --token ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
       # 7. 发布到 Cloudflare Workers
       - name: Deploy to Cloudflare Workers
         run: |
           cd rin/client
           wrangler publish
-
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
 
